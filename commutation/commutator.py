@@ -1,6 +1,6 @@
 #!/bin/python3
 
-from commutator_globals import Address_Handler as ah
+from .commutator_globals import Address_Handler as ah
 
 
 class Commutator:
@@ -16,10 +16,8 @@ class Commutator:
         self.id = (commutator_nr, section_nr)
         self.addressing = {}
 
-    def set_addresses(self, address_list):
+    def set_addresses(self, interface, address_dict):
         """
         Set address for every commutator interface
         """
-        for counter, addresses_dict in enumerate(address_list):
-            interface = ah.in_out_entries[counter]
-            self.addressing[interface] = addresses_dict
+        self.addressing[interface] = address_dict
