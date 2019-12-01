@@ -36,10 +36,10 @@ class Commutation_Field:
                     ad_num = ["None" for count in range(3)]
                 self.commutators[identity].set_addresses(interface, {ah.address_format[counter]: num for counter,
                                                                      num in enumerate(ad_num)})
-
     def show_com(self):
         """
         Show commutation field
         """
         for identity, com in self.commutators.items():
             print("identity: ", identity, " com ", com.addressing)
+

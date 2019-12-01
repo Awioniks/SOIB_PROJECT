@@ -114,5 +114,19 @@
                 }
             }
         }
+    },
+  "permutation":
+    {
+      "commutators":
+        {
+          "one_zero" : "one_one",
+          "one_one" : "one_zero",
+          "two_zero" : "three_zero",
+          "two_one" : "two_one",
+          "three_zero" : "two_zero",
+          "three_one" : "four_one",
+          "four_zero" : "three_one",
+          "four_one" : "four_zero"
+        }
     }
 }

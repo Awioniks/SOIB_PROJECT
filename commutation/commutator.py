@@ -15,6 +15,8 @@ class Commutator:
         """
         self.id = (commutator_nr, section_nr)
         self.addressing = {}
+        self.in_addressing = {}
+
 
     def set_addresses(self, interface, address_dict):
         """

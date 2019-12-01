@@ -13,6 +13,7 @@ class Const_For_Commutators:
         SECTIONS = None
         COMMUTATORS = None
         CONNECTIONS = None
+        PERMUTATIONS = None
 
     def aggregate_consts(self, file_to_read):
         with open(file_to_read) as json_file:
@@ -23,6 +24,7 @@ class Const_For_Commutators:
             self.SECTIONS = data["commutators"]["SECTION"]
             self.COMMUTATORS = data["commutators"]["COMMUTATORS"]
             self.CONNECTIONS = data["connections"]["sections"]
+            self.PERMUTATIONS = data["permutation"]["commutators"]
 
 
 class Address_Handler:
