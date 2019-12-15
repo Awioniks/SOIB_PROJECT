@@ -1,132 +1,109 @@
 {
-  "commutators":
-    {
-      "IN" : 8,
-      "OUT" : 8,
-      "SECTION" : 3,
-      "IN_SECTION" : 4,
-      "COMMUTATORS" : 12
-    },
-  "connections":
-    {
-      "sections" :
-        {
-          "one" :
-            {
-              "commutator":
-                {
-                  "one" :
-                    {
-                      "in_zero" : "None",
-                      "in_one" : "None",
-                      "out_zero" : "two_one_zero",
-                      "out_one" : "two_two_zero"
-                    },
-                  "two" :
-                    {
-                      "in_zero" : "None",
-                      "in_one" : "None",
-                      "out_zero" : "two_one_one",
-                      "out_one" : "two_three_zero"
-                    },
-                  "three" :
-                    {
-                      "in_zero" : "None",
-                      "in_one" : "None",
-                      "out_zero" : "two_two_one",
-                      "out_one" : "two_four_zero"
-                    },
-                  "four" :
-                    {
-                      "in_zero" : "None",
-                      "in_one" : "None",
-                      "out_zero" : "two_three_one",
-                      "out_one" :  "two_four_one"
-                    }
-                }
-            },
-           "two" :
-            {
-              "commutator":
-                {
-                  "one" :
-                    {
-                      "in_zero" : "one_one_zero",
-                      "in_one" : "one_two_zero",
-                      "out_zero" : "three_one_zero",
-                      "out_one" : "three_two_zero"
-                    },
-                  "two" :
-                    {
-                      "in_zero" : "one_one_one",
-                      "in_one" : "one_three_zero",
-                      "out_zero" : "three_one_one",
-                      "out_one" : "three_three_zero"
-                    },
-                  "three" :
-                    {
-                      "in_zero" : "one_two_one",
-                      "in_one" : "one_four_zero",
-                      "out_zero" : "three_two_one",
-                      "out_one" : "three_four_zero"
-                    },
-                  "four" :
-                    {
-                      "in_zero" : "one_three_one",
-                      "in_one" : "one_four_one",
-                      "out_zero" : "three_three_one",
-                      "out_one" : "three_four_one"
-                    }
-                }
-            },
-           "three" :
-            {
-              "commutator":
-                {
-                  "one" :
-                    {
-                      "in_zero" : "two_one_zero",
-                      "in_one" : "two_two_zero",
-                      "out_zero" : "None",
-                      "out_one" : "None"
-                    },
-                  "two" :
-                    {
-                      "in_zero" : "two_one_one",
-                      "in_one" : "two_three_zero",
-                      "out_zero" : "None",
-                      "out_one" : "None"
-                    },
-                  "three" :
-                    {
-                      "in_zero" : "two_two_one",
-                      "in_one" : "two_four_zero",
-                      "out_zero" : "None",
-                      "out_one" :  "None"
-                    },
-                  "four" :
-                    {
-                      "in_zero" : "two_three_one",
-                      "in_one" : "two_four_one",
-                      "out_zero" : "None",
-                      "out_one" : "None"
-                    }
-                }
-            }
+  "commutators": {
+    "IN": 8,
+    "OUT": 8,
+    "SECTION": 3,
+    "IN_SECTION": 4,
+    "COMMUTATORS": 12
+  },
+  "connections": {
+    "sections": {
+      "one": {
+        "commutator": {
+          "one": {
+            "in_zero": "None",
+            "in_one": "None",
+            "out_zero": "two_one_zero",
+            "out_one": "two_two_zero"
+          },
+          "two": {
+            "in_zero": "None",
+            "in_one": "None",
+            "out_zero": "two_one_one",
+            "out_one": "two_three_zero"
+          },
+          "three": {
+            "in_zero": "None",
+            "in_one": "None",
+            "out_zero": "two_two_one",
+            "out_one": "two_four_zero"
+          },
+          "four": {
+            "in_zero": "None",
+            "in_one": "None",
+            "out_zero": "two_three_one",
+            "out_one": "two_four_one"
+          }
         }
-    },
-  "permutation":
-    {
-      "commutators":
-        {
-          "one_zero" : "one_one",
-          "one_one" : "one_zero",
-          "two_zero" : "three_zero",
-          "two_one" : "two_one",
-          "three_zero" : "two_zero",
-          "three_one" : "four_one",
-          "four_zero" : "three_one",
-          "four_one" : "four_zero"
+      },
+      "two": {
+        "commutator": {
+          "one": {
+            "in_zero": "one_one_zero",
+            "in_one": "one_two_zero",
+            "out_zero": "three_one_zero",
+            "out_one": "three_two_zero"
+          },
+          "two": {
+            "in_zero": "one_one_one",
+            "in_one": "one_three_zero",
+            "out_zero": "three_one_one",
+            "out_one": "three_three_zero"
+          },
+          "three": {
+            "in_zero": "one_two_one",
+            "in_one": "one_four_zero",
+            "out_zero": "three_two_one",
+            "out_one": "three_four_zero"
+          },
+          "four": {
+            "in_zero": "one_three_one",
+            "in_one": "one_four_one",
+            "out_zero": "three_three_one",
+            "out_one": "three_four_one"
+          }
         }
+      },
+      "three": {
+        "commutator": {
+          "one": {
+            "in_zero": "two_one_zero",
+            "in_one": "two_two_zero",
+            "out_zero": "None",
+            "out_one": "None"
+          },
+          "two": {
+            "in_zero": "two_one_one",
+            "in_one": "two_three_zero",
+            "out_zero": "None",
+            "out_one": "None"
+          },
+          "three": {
+            "in_zero": "two_two_one",
+            "in_one": "two_four_zero",
+            "out_zero": "None",
+            "out_one": "None"
+          },
+          "four": {
+            "in_zero": "two_three_one",
+            "in_one": "two_four_one",
+            "out_zero": "None",
+            "out_one": "None"
+          }
+        }
+      }
     }
+  },
+  "permutation": {
+    "commutators": {
+      "one_zero": "two_one",
+      "one_one": "one_zero",
+      "two_zero": "four_one",
+      "two_one": "one_one",
+      "three_zero": "three_zero",
+      "three_one": "four_zero",
+      "four_zero": "two_zero",
+      "four_one": "three_one"
+    }
+  }
 }
