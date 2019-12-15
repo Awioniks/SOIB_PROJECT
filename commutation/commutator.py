@@ -32,6 +32,4 @@ class Commutator:
         else:
             direction = "in" + "_" + port_out
             self.in_addressing[port_out] = port_in
-        print(direction)
-        print(self.addressing[direction])
         return self.addressing[direction]

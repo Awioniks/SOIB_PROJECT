@@ -175,6 +175,14 @@ class In_Out_Route:
             )
 
     @classmethod
+    def research(cls, mem, value):
+        """
+        research antother commutator if route()
+        method get into infinite loop
+        """
+        return mem + 2 if value > mem else mem + 1
+
+    @classmethod
     def route(cls):
         """
         route in commutators
@@ -187,14 +195,11 @@ class In_Out_Route:
                 [],
             )
             counter_perm = 0
-            referent_perm_key, referent_perm_value = (
-                cls.permutations[0]
-                if section_counter == 0
-                else perm_dict_label_all[0]
-            )
+            referent_perm_key, referent_perm_value = perm_dict_label_all[0]
             perm_dict_label_0.append((referent_perm_key, referent_perm_value))
             while counter_perm < len(cls.permutations) - 1:
                 if counter_perm % 2 == 0:
+                    referent_perm_value_mem = referent_perm_value
                     referent_perm_value = (
                         cls.calculate(referent_perm_value, True) - 1
                         if cls.calculate(referent_perm_value, True) % 2 == 1
@@ -206,6 +211,26 @@ class In_Out_Route:
                         False,
                     )
 
+                    check_pair = (
+                        referent_perm_key,
+                        cls.calculate(referent_perm_value, False),
+                    )
+
+                    if (
+                        check_pair in perm_dict_label_1
+                        or check_pair in perm_dict_label_0
+                    ):
+                        referent_perm_value = cls.research(
+                            referent_perm_value_mem,
+                            cls.calculate(referent_perm_value, False),
+                        )
+
+                        referent_perm_key = cls.look_for_permutation(
+                            cls.calculate(referent_perm_value, False),
+                            perm_dict_label_all,
+                            False,
+                        )
+
                     perm_dict_label_1.append(
                         (
                             referent_perm_key,
@@ -216,6 +241,7 @@ class In_Out_Route:
                         referent_perm_value, False
                     )
                 else:
+                    referent_perm_key_mem = referent_perm_key
                     referent_perm_key = (
                         cls.calculate(referent_perm_key, True) - 1
                         if cls.calculate(referent_perm_key, True) % 2 == 1
@@ -226,6 +252,27 @@ class In_Out_Route:
                         perm_dict_label_all,
                         True,
                     )
+
+                    check_pair = (
+                        cls.calculate(referent_perm_key, False),
+                        referent_perm_value,
+                    )
+
+                    if (
+                        check_pair in perm_dict_label_0
+                        or check_pair in perm_dict_label_1
+                    ):
+                        referent_perm_key = cls.research(
+                            cls.calculate(referent_perm_key_mem, True),
+                            referent_perm_key,
+                        )
+
+                        referent_perm_value = cls.look_for_permutation(
+                            cls.calculate(referent_perm_key, False),
+                            perm_dict_label_all,
+                            True,
+                        )
+
                     perm_dict_label_0.append(
                         (
                             cls.calculate(referent_perm_key, False),
@@ -234,12 +281,15 @@ class In_Out_Route:
                     )
                     referent_perm_key = cls.calculate(referent_perm_key, False)
                 counter_perm += 1
-            print(perm_dict_label_all, "ALL")
-            print(perm_dict_label_0, "0")
-            print(perm_dict_label_1, "1")
-            perm_dict_label_all = cls.set_addresses_in_commutator(
-                perm_dict_label_0, perm_dict_label_1, section_counter
-            )
-            print(perm_dict_label_all, "ALL_@")
 
+            if section_counter + 1 < cls.section_loop:
+                perm_dict_label_all.clear()
+                perm_dict_label_all.extend(
+                    cls.set_addresses_in_commutator(
+                        perm_dict_label_0, perm_dict_label_1, section_counter
+                    )
+                )
+            else:
+                print(perm_dict_label_0)
+                print(perm_dict_label_1)
             section_counter += 1
