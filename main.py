@@ -3,12 +3,14 @@
 # main func making Commutation Field building
 
 from argparse import ArgumentParser
-import sys
-import commutation.commutation_field as com
 from algorithms.in_out_route import In_Out_Route as routing_in
-from algorithms.division_route import Division_Route as div
 from monte_carlo.montecarlo import montedecorator
 import commutation.commutator_globals as glob
+import sys
+import commutation.commutation_field as com
+
+# SIMULATION NUMBER DEFAULT VALUE
+SIM_NUM = 200
 
 # SIMULATION NUMBER DEFAULT VALUE
 SIM_NUM = 20000000
@@ -36,6 +38,7 @@ def main(file_to_read):
         report = routing_in.route()
         print(report)
         #div.hello()
+        return routing_in.route()
 
     for section_nr, connection in consts.CONNECTIONS.items():
         for nr_in_section, addresses in connection["commutator"].items():
