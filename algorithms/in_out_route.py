@@ -9,16 +9,19 @@ class In_Out_Route:
     """
 
     @classmethod
-    def set_data(cls, consts, field):
+    def set_data(cls, field, consts, perm_mc=None):
         """
         Set data which are required for routing
         """
         cls.consts = consts
         cls.field = field
         cls.section_loop = floor(consts.SECTIONS / 2) + 1
-        cls.permutations = [
-            (key, value) for key, value in consts.PERMUTATIONS.items()
-        ]
+        if not perm_mc:
+            cls.permutations = [
+                (key, value) for key, value in consts.PERMUTATIONS.items()
+            ]
+        else:
+            cls.permutations = [(key, value) for key, value in perm_mc.items()]
 
     @classmethod
     def look_for_permutation(cls, thing, permutations, key_or_value):
@@ -175,12 +178,24 @@ class In_Out_Route:
             )
 
     @classmethod
-    def research(cls, mem, value):
+    def research(cls, mem=0, value=0):
         """
         research antother commutator if route()
         method get into infinite loop
         """
         return mem + 2 if value > mem else mem + 1
+
+    @classmethod
+    def algorithm_report(cls, perms):
+        report = {"success": 0, "failure": 0}
+        for perm in perms:
+            permutation_key = perm[0].split("_")
+            permutation_value = perm[1].split("_")
+            if permutation_key[0] == permutation_value[0]:
+                report["success"] += 1
+            else:
+                report["failure"] += 1
+        return report
 
     @classmethod
     def route(cls):
@@ -216,21 +231,39 @@ class In_Out_Route:
                         cls.calculate(referent_perm_value, False),
                     )
 
-                    if (
-                        check_pair in perm_dict_label_1
-                        or check_pair in perm_dict_label_0
-                    ):
-                        referent_perm_value = cls.research(
-                            referent_perm_value_mem,
-                            cls.calculate(referent_perm_value, False),
-                        )
+                    look_back_count = 0
+                    for look_count in range(len(cls.permutations)):
+                        if (
+                            check_pair in perm_dict_label_1
+                            or check_pair in perm_dict_label_0
+                        ):
+                            length = len(cls.permutations) - 1
+                            if referent_perm_value == length:
+                                look_back_count = look_count
+                                referent_perm_value = 0
+                            if look_count == 0:
+                                referent_perm_value = cls.research(
+                                    cls.calculate(
+                                        referent_perm_value_mem, True
+                                    ),
+                                    referent_perm_value,
+                                )
+                            else:
+                                referent_perm_value += (
+                                    1 - look_back_count
+                                )
 
-                        referent_perm_key = cls.look_for_permutation(
-                            cls.calculate(referent_perm_value, False),
-                            perm_dict_label_all,
-                            False,
-                        )
-
+                            referent_perm_key = cls.look_for_permutation(
+                                cls.calculate(referent_perm_value, False),
+                                perm_dict_label_all,
+                                False,
+                            )
+                            check_pair = (
+                                referent_perm_key,
+                                cls.calculate(referent_perm_value, False),
+                            )
+                        else:
+                            break
                     perm_dict_label_1.append(
                         (
                             referent_perm_key,
@@ -257,22 +290,35 @@ class In_Out_Route:
                         cls.calculate(referent_perm_key, False),
                         referent_perm_value,
                     )
-
-                    if (
-                        check_pair in perm_dict_label_0
-                        or check_pair in perm_dict_label_1
-                    ):
-                        referent_perm_key = cls.research(
-                            cls.calculate(referent_perm_key_mem, True),
-                            referent_perm_key,
-                        )
-
-                        referent_perm_value = cls.look_for_permutation(
-                            cls.calculate(referent_perm_key, False),
-                            perm_dict_label_all,
-                            True,
-                        )
-
+                    for look_count in range(len(cls.permutations)):
+                        if (
+                            check_pair in perm_dict_label_0
+                            or check_pair in perm_dict_label_1
+                        ):
+                            length = len(cls.permutations) - 1
+                            if referent_perm_key == length:
+                                look_back_count = look_count
+                                referent_perm_key = 0
+                            if look_count == 0:
+                                referent_perm_key = cls.research(
+                                    cls.calculate(referent_perm_key_mem, True),
+                                    referent_perm_key,
+                                )
+                            else:
+                                referent_perm_key += (
+                                    1 - look_back_count
+                                )
+                            referent_perm_value = cls.look_for_permutation(
+                                cls.calculate(referent_perm_key, False),
+                                perm_dict_label_all,
+                                True,
+                            )
+                            check_pair = (
+                                cls.calculate(referent_perm_key, False),
+                                referent_perm_value,
+                            )
+                        else:
+                            break
                     perm_dict_label_0.append(
                         (
                             cls.calculate(referent_perm_key, False),
@@ -290,6 +336,6 @@ class In_Out_Route:
                     )
                 )
             else:
-                print(perm_dict_label_0)
-                print(perm_dict_label_1)
+                perm_dict_label_0.extend(perm_dict_label_1)
+                return cls.algorithm_report(perm_dict_label_0)
             section_counter += 1
