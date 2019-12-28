@@ -4,6 +4,7 @@
 
 from argparse import ArgumentParser
 from algorithms.in_out_route import In_Out_Route as routing_in
+from algorithms.order_route import Order_Route as order_route
 from monte_carlo.montecarlo import montedecorator
 import commutation.commutator_globals as glob
 import sys
@@ -11,9 +12,6 @@ import commutation.commutation_field as com
 
 # SIMULATION NUMBER DEFAULT VALUE
 SIM_NUM = 200
-
-# SIMULATION NUMBER DEFAULT VALUE
-SIM_NUM = 20000000
 
 
 def main(file_to_read):
@@ -35,10 +33,14 @@ def main(file_to_read):
             field=kwargs["field"],
             perm_mc=kwargs["perm_mc"],
         )
-        report = routing_in.route()
-        print(report)
-        #div.hello()
-        return routing_in.route()
+        report_routing_in = routing_in.route()
+        order_route.set_data(
+            consts=kwargs["consts"],
+            field=kwargs["field"],
+            perm_mc=kwargs["perm_mc"],
+        )
+        report_order = order_route.main_path_searcher()
+        return {"routing_in": report_routing_in, "report_order": report_order}
 
     for section_nr, connection in consts.CONNECTIONS.items():
         for nr_in_section, addresses in connection["commutator"].items():

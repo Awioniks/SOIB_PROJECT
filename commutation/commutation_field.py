@@ -10,7 +10,7 @@ class Commutation_Field:
 
     def __init__(self, consts):
         """
-        Comutation Field Constructor with empty commutators list
+        Comutation Field Constructor with empty commutators list.
         """
         self.consts = consts
         self.commutators = {}
@@ -18,7 +18,9 @@ class Commutation_Field:
     def set_addresses_in_commutator_route_algt(
         self, is_zero_out_ports, key, port
     ):
-
+        """
+        Set addresses inside commutator.
+        """
         is_zero_ports = is_zero_out_ports["zero"]
         is_out = is_zero_out_ports["out"]
 
@@ -33,7 +35,7 @@ class Commutation_Field:
 
     def add_commutator(self, section_nr, nr_in_section):
         """
-        Method for adding new commutators to list
+        Method for adding new commutators to list.
         """
         key = "{}_{}"
         commutator = Commutator(section_nr, nr_in_section)
@@ -43,7 +45,7 @@ class Commutation_Field:
     def set_addresses_of_commutator(self, identity, addresses):
         """
         Method for setting addresses in particular commutator
-        according to his identity
+        according to his identity.
         """
         if identity in self.commutators:
             for interface, address in addresses.items():
