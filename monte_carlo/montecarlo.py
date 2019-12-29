@@ -4,7 +4,7 @@ import pylab
 from algorithms.in_out_route import In_Out_Route
 
 """
-Monte Carlo Decorator
+Monte Carlo Decorator.
 """
 
 
@@ -20,7 +20,7 @@ def montedecorator(sim_num, com_in, consts, field):
             count = 0
             x_plot = []
             y_plot_in, y_plot_or = [], []
-            fig = pylab.figure()
+            fig = pylab.figure(figsize=(20, 10))
             ax = fig.add_subplot(1, 1, 1)
             while count < sim_num:
                 report = func(
@@ -37,8 +37,12 @@ def montedecorator(sim_num, com_in, consts, field):
                 y_plot_in.append(result_in)
                 y_plot_or.append(report["report_order"])
                 count += 1
-            ax.plot(x_plot, y_plot_in, color='tab:red')
-            ax.plot(x_plot, y_plot_or, color='tab:blue')
+            ax.plot(x_plot, y_plot_in, color="tab:red", label="Order algt")
+            ax.plot(x_plot, y_plot_or, color="tab:blue", label="In_Out algt")
+            legend = ax.legend(
+                loc="lower center", shadow=True, fontsize="x-large"
+            )
+            legend.get_frame().set_facecolor("#eafff5")
             ax.set_ylim([0, 102])
             ax.set_xlabel("samples")
             ax.set_ylabel("percentage")
