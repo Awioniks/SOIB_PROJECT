@@ -2,12 +2,13 @@
 
 # main func making Commutation Field building
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser # TODO remake for argparse
 from algorithms.in_out_route import In_Out_Route as routing_in
 from algorithms.order_route import Order_Route as order_route
 from monte_carlo.montecarlo import montedecorator
 import commutation.commutator_globals as glob
 import sys
+import logging as log
 import commutation.commutation_field as com
 
 # SIMULATION NUMBER DEFAULT VALUE
@@ -18,6 +19,8 @@ def main(file_to_read):
     """
     main func which build commutation field
     """
+    log.basicConfig(format="%(asctime)s - %(message)s", level=log.INFO)
+    log.info("START OF SIMULATION")
     consts = glob.Const_For_Commutators()
     consts.aggregate_consts(file_to_read)
     COM_IN = consts.IN

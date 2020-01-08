@@ -1,11 +1,25 @@
 import random
 import functools
 import pylab
+import logging as log
 from algorithms.in_out_route import In_Out_Route
 
 """
 Monte Carlo Decorator.
 """
+
+
+def log_all(*args, **kwargs):
+    # TODO BETTER IMPORTS I AM NOOB
+    log.basicConfig(format="%(asctime)s - %(message)s", level=log.INFO)
+    log_data_str = [
+        str(iner) + " " + str(outer)
+        for iner, outer in zip(kwargs["y_in"], kwargs["y_or"])
+    ]
+    log.info("         IN   ORD")
+    for counter, login in enumerate(log_data_str):
+        log_to_log = str(counter) + " sample " + login
+        log.info(log_to_log)
 
 
 def montedecorator(sim_num, com_in, consts, field):
@@ -37,6 +51,7 @@ def montedecorator(sim_num, com_in, consts, field):
                 y_plot_in.append(result_in)
                 y_plot_or.append(report["report_order"])
                 count += 1
+            log_all(y_in=y_plot_in, y_or=y_plot_or, x_data=x_plot)
             ax.plot(x_plot, y_plot_in, color="tab:red", label="Order algt")
             ax.plot(x_plot, y_plot_or, color="tab:blue", label="In_Out algt")
             legend = ax.legend(
