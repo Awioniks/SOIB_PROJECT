@@ -3,6 +3,14 @@ from tkinter import *
 global SECTIONS_IN_COMMUTATOR
 global COMMUTATOR_IN_SECTION
 
+class WinConsts:
+    def consts(self, func, value):
+        def fset(self, value):
+            raise TypeError
+
+        def fget(self, value):
+            return func(value)
+        return property(fget, fset)
 
 class Api_Win:
     def __init__(self):
@@ -65,11 +73,16 @@ main_window.geometry("1000x500")
 main_window.resizable(0, 0)
 main_window.title("Commutator Simulator")
 
+# Input vars
 input_text_sec = StringVar()
 input_text_sec_in = StringVar()
 input_sec_choose = StringVar()
 input_sec_in = StringVar()
 input_port_choose = StringVar()
+
+# Input Frames
+input_frame = Frame(main_window, width = 312, height = 50, bd = 0, highlightbackground = "black", highlightcolor = "black", highlightthickness = 1)
+input_frame.pack(side = TOP)
 
 # Creating of elements
 label_sections = Label(main_window, text="Nr_in_sec")
@@ -123,24 +136,24 @@ yo_button = Button(
 
 
 # Adding of input elements
-label_sections.grid(row=0, column=0)
-label_in_section.grid(row=1, column=0, padx=3, pady=3)
-sec_entry.grid(row=0, column=1, columnspan=2, padx=3, pady=3)
-sec_in_entry.grid(row=1, column=1, columnspan=2, padx=3, pady=3)
-label_in_com.grid(row=0, column=3, padx=20, pady=3)
-label_in_sec.grid(row=1, column=3, padx=20, pady=3)
-sec_in_choose.grid(row=0, column=5, columnspan=2, padx=3, pady=3)
-sec_choose.grid(row=1, column=5, columnspan=2, padx=3, pady=3)
-label_in_port.grid(row=0, column=7, padx=20, pady=3)
-port_choose.grid(row=0, column=8, columnspan=2, padx=3, pady=3)
-port_choose.grid(row=0, column=8, columnspan=2, padx=3, pady=3)
+#label_sections.grid(row=0, column=0)
+#label_in_section.grid(row=1, column=0, padx=3, pady=3)
+#sec_entry.grid(row=0, column=1, columnspan=2, padx=3, pady=3)
+#sec_in_entry.grid(row=1, column=1, columnspan=2, padx=3, pady=3)
+#label_in_com.grid(row=0, column=3, padx=20, pady=3)
+#label_in_sec.grid(row=1, column=3, padx=20, pady=3)
+#sec_in_choose.grid(row=0, column=5, columnspan=2, padx=3, pady=3)
+#sec_choose.grid(row=1, column=5, columnspan=2, padx=3, pady=3)
+#label_in_port.grid(row=0, column=7, padx=20, pady=3)
+#port_choose.grid(row=0, column=8, columnspan=2, padx=3, pady=3)
+#port_choose.grid(row=0, column=8, columnspan=2, padx=3, pady=3)
 
 
-label_control.grid(row=4, column=1, padx=1, pady=20)
-build_button.grid(row=5, column=0, padx=25)
-clear_button.grid(row=5, column=1, padx=20)
-get_button.grid(row=5, column=2, padx=20)
-results.grid(row=6, column=0, columnspan=3, rowspan=3, padx=10, pady=10, sticky=W + E)
+#label_control.grid(row=4, column=1, padx=1, pady=20)
+#build_button.grid(row=5, column=0, padx=25)
+#clear_button.grid(row=5, column=1, padx=20)
+#get_button.grid(row=5, column=2, padx=20)
+#results.grid(row=6, column=0, columnspan=3, rowspan=3, padx=10, pady=10, sticky=W + E)
 # yo_button.grid(row=5, column=4)
 # yo_button_.grid(row=6, column=4)
 # yo_button__.grid(row=7, column=4)
