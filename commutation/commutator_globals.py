@@ -15,7 +15,6 @@ class Const_For_Commutators:
         self.PERMUTATIONS = None
         self.in_out_entries = ["in_zero", "in_one", "out_zero", "out_one"]
         self.address_format = ["section_nr", "commutator_nr", "interface_nr"]
-        self.section_type = ["in", "middle", "out"]
         self.address_decoder = {
             0: "zero",
             1: "one",
@@ -50,4 +49,4 @@ class Const_For_Commutators:
             self.SECTIONS = data["commutators"]["SECTION"]
             self.COMMUTATORS = data["commutators"]["COMMUTATORS"]
             self.CONNECTIONS = data["connections"]["sections"]
-            self.PERMUTATIONS = data["permutation"]["commutators"]
+            # self.PERMUTATIONS = data["permutation"]["commutators"]

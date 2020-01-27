@@ -16,11 +16,12 @@ class In_Out_Route:
         cls.consts = consts
         cls.field = field
         cls.section_loop = floor(consts.SECTIONS / 2) + 1
-        if not perm_mc:
-            cls.permutations = [
-                (key, value) for key, value in consts.PERMUTATIONS.items()
-            ]
-        else:
+        # if not perm_mc:
+        #     cls.permutations = [
+        #         (key, value) for key, value in consts.PERMUTATIONS.items()
+        #     ]
+        # else:
+        if perm_mc:
             cls.permutations = [(key, value) for key, value in perm_mc.items()]
 
     @classmethod

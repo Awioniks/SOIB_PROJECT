@@ -2,10 +2,10 @@
 
 # main func making Commutation Field building
 
-from argparse import ArgumentParser # TODO remake for argparse
+from argparse import ArgumentParser  # TODO remake for argparse
 from algorithms.in_out_route import In_Out_Route as routing_in
 from algorithms.order_route import Order_Route as order_route
-from monte_carlo.montecarlo import montedecorator
+from monte_carlo.montecarlo import montedecorator, log_giver
 import commutation.commutator_globals as glob
 import sys
 import logging as log
@@ -26,9 +26,13 @@ def main(file_to_read):
     COM_IN = consts.IN
     com_field = com.Commutation_Field(consts)
     key = "{}_{}"
+    log_list = []
 
     @montedecorator(
-        sim_num=SIM_NUM, com_in=COM_IN, consts=consts, field=com_field
+        sim_num=SIM_NUM,
+        com_in=COM_IN,
+        consts=consts,
+        field=com_field,
     )
     def start_algorithms(*args, **kwargs):
         routing_in.set_data(
@@ -52,6 +56,8 @@ def main(file_to_read):
             com_field.set_addresses_of_commutator(identity, addresses)
     routing_in.set_data(consts=consts, field=com_field)
     start_algorithms()
+    log_list = log_giver()
+    return log_list
 
 
 if __name__ == "__main__":

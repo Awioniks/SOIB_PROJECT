@@ -1,0 +1,45 @@
+{
+   "commutators": {
+      "IN": 4,
+      "OUT": 4,
+      "SECTION": 2,
+      "IN_SECTION": 2,
+      "COMMUTATORS": 4
+   },
+   "connections": {
+      "sections": {
+         "one": {
+            "commutator": {
+               "one": {
+                  "in_zero": "None",
+                  "in_one": "None",
+                  "out_zero": "two_one_zero",
+                  "out_one": "two_two_zero"
+               },
+               "two": {
+                  "in_zero": "None",
+                  "in_one": "None",
+                  "out_zero": "two_one_one",
+                  "out_one": "two_two_one"
+               }
+            }
+         },
+         "two": {
+            "commutator": {
+               "one": {
+                  "in_zero": "one_one_zero",
+                  "in_one": "one_two_zero",
+                  "out_zero": "None",
+                  "out_one": "None"
+               },
+               "two": {
+                  "in_zero": "one_one_one",
+                  "in_one": "one_two_one",
+                  "out_zero": "None",
+                  "out_one": "None"
+               }
+            }
+         }
+      }
+   }
+}

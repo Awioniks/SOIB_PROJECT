@@ -7,19 +7,31 @@ from algorithms.in_out_route import In_Out_Route
 """
 Monte Carlo Decorator.
 """
+log_aller = []
+
+
+def log_giver():
+    return log_aller
 
 
 def log_all(*args, **kwargs):
     # TODO BETTER IMPORTS I AM NOOB
-    log.basicConfig(format="%(asctime)s - %(message)s", level=log.INFO)
+    log_list = []
+    log.basicConfig(
+        format="%(asctime)s - %(message)s",
+        level=log.INFO,
+        datefmt="%d-%b-%y %H:%M:%S",
+    )
     log_data_str = [
         str(iner) + " " + str(outer)
         for iner, outer in zip(kwargs["y_in"], kwargs["y_or"])
     ]
     log.info("         IN   ORD")
     for counter, login in enumerate(log_data_str):
-        log_to_log = str(counter) + " sample " + login
+        log_to_log = str(counter) + " sample " + login + " y_in y_or"
+        log_aller.append(log_to_log + "\n")
         log.info(log_to_log)
+    return log_list
 
 
 def montedecorator(sim_num, com_in, consts, field):
