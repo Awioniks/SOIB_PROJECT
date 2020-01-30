@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import json
 import logging as log
 from commutation.commutator_globals import Const_For_Commutators as Consts
@@ -20,6 +22,7 @@ class Api_Win:
         self.CONNECTION_LIST = dict()
         self.SECTIONS_IN_COMMUTATOR = 0
         self.COMMUTATOR_IN_SECTION = 0
+        self.canvas = None
 
     def send_json_to_file(self):
         build_json = {
@@ -55,6 +58,8 @@ class Api_Win:
         add_con_button.config(state=NORMAL)
         clear_button.config(state=NORMAL)
         get_button.config(state=NORMAL)
+        self.canvas = Canvas(com_frame, height=600)
+        self.canvas.pack(side=TOP, fill=BOTH)
         self.CONNECTION_LIST.setdefault("connections", {"sections": {}})
         for column_ in range(kwarg["com"]):
             column = self.const.address_decoder[column_ + 1]
@@ -62,7 +67,7 @@ class Api_Win:
                 column, {"commutator": {}}
             )
             for row_ in range(kwarg["sec"]):
-                identity = str(row_) + " " + str(column_)
+                identity = str(row_ + 1) + " " + str(column_ + 1)
                 row = self.const.address_decoder[row_ + 1]
                 self.CONNECTION_LIST["connections"]["sections"][column][
                     "commutator"
@@ -73,26 +78,36 @@ class Api_Win:
                         for interface in self.const.in_out_entries
                     },
                 )
-                com_button = Button(
-                    com_frame,
-                    text=identity,
-                    width=8,
-                    height=3,
-                    padx=3,
-                    pady=7,
+                self.canvas.create_rectangle(
+                    10 + column_ * 120,
+                    10 + row_ * 70,
+                    100 + column_ * 120,
+                    60 + row_ * 70,
+                    outline="#f11",
+                    fill="#1f1",
+                    width=2,
                 )
-                self.COM_LIST.append(com_button)
-                com_button.grid(row=row_, column=column_, padx=15, pady=15)
+                # com_button = Button(
+                #     com_frame,
+                #     text=identity,
+                #     width=8,
+                #     height=3,
+                #     padx=3,
+                #     pady=7,
+                # )
+                # self.COM_LIST.append(com_button)
+                # com_button.grid(row=row_, column=column_, padx=15, pady=15)
 
     def remove_com(self):
-        for com in self.COM_LIST:
-            com.destroy()
+        # for com in self.COM_LIST:
+        # com.destroy()
         build_button.config(state=NORMAL)
         add_con_button.config(state=DISABLED)
         clear_button.config(state=DISABLED)
         get_button.config(state=DISABLED)
         results.delete(1.0, END)
         results_calculate.delete(1.0, END)
+        self.canvas.destroy()
         self.SECTIONS_IN_COMMUTATOR = 0
         self.COMMUTATOR_IN_SECTION = 0
         self.COM_LIST = []
@@ -118,6 +133,13 @@ class Api_Win:
             conn_seq.append(com_out)
             port_out = int(port_out_choose.get())
             conn_seq.append(port_out)
+            self.canvas.create_line(
+                100 + (sec - 1) * 120,
+                20 + (com_out - 1) * 70 + port_out * 30,
+                130 + (sec - 1) * 120,
+                20 + (com_in - 1) * 70 + port_in * 30,
+                dash=(4, 2),
+            )
             for conn in conn_seq:
                 if conn is None:
                     log.info("None value")
@@ -166,12 +188,15 @@ class Api_Win:
             )
             section = self.const.address_decoder[sec]
             com_out = self.const.address_decoder[com_out]
+            port = self.const.address_decoder[port_out]
             result_text = (
-                "Sec: "
+                "S_O: "
                 + section
-                + " C_Ou: "
+                + " C: "
                 + com_out
-                + " Ad_Ou: "
+                + " P: "
+                + port
+                + " A: "
                 + address_out
                 + "\n"
             )
@@ -180,12 +205,15 @@ class Api_Win:
             ][com_out][interface_out] = address_out
             com_in = self.const.address_decoder[com_in]
             section = self.const.address_decoder[sec + 1]
+            port = self.const.address_decoder[port_in]
             result_text += (
-                "Sec: "
+                "S_I: "
                 + section
-                + " C_In: "
+                + " C: "
                 + com_in
-                + " A_In "
+                + " P: "
+                + port
+                + " A: "
                 + address_in
                 + "\n"
             )

@@ -29,12 +29,10 @@ def main(file_to_read):
     log_list = []
 
     @montedecorator(
-        sim_num=SIM_NUM,
-        com_in=COM_IN,
-        consts=consts,
-        field=com_field,
+        sim_num=SIM_NUM, com_in=COM_IN, consts=consts, field=com_field,
     )
     def start_algorithms(*args, **kwargs):
+        print(kwargs["perm_mc"], "KWWAAARRGS")
         routing_in.set_data(
             consts=kwargs["consts"],
             field=kwargs["field"],
@@ -46,7 +44,9 @@ def main(file_to_read):
             field=kwargs["field"],
             perm_mc=kwargs["perm_mc"],
         )
-        report_order = order_route.main_path_searcher()
+        report_order = order_route.main_path_searcher(
+            permutations=kwargs["perm_mc"]
+        )
         return {"routing_in": report_routing_in, "report_order": report_order}
 
     for section_nr, connection in consts.CONNECTIONS.items():

@@ -64,8 +64,8 @@ def montedecorator(sim_num, com_in, consts, field):
                 y_plot_or.append(report["report_order"])
                 count += 1
             log_all(y_in=y_plot_in, y_or=y_plot_or, x_data=x_plot)
-            ax.plot(x_plot, y_plot_in, color="tab:red", label="Order algt")
-            ax.plot(x_plot, y_plot_or, color="tab:blue", label="In_Out algt")
+            ax.plot(x_plot, y_plot_in, color="tab:red", label="In_Out algt")
+            ax.plot(x_plot, y_plot_or, color="tab:blue", label="Order algt")
             legend = ax.legend(
                 loc="lower center", shadow=True, fontsize="x-large"
             )
@@ -80,3 +80,4 @@ def montedecorator(sim_num, com_in, consts, field):
         return wrapper_decorator
 
     return monterepeater
+    

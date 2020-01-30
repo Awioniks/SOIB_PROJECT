@@ -15,6 +15,7 @@ class In_Out_Route:
         """
         cls.consts = consts
         cls.field = field
+        cls.odd_flag = False
         cls.section_loop = floor(consts.SECTIONS / 2) + 1
         # if not perm_mc:
         #     cls.permutations = [
@@ -119,11 +120,14 @@ class In_Out_Route:
                 is_zero_out_port, identity, port_right_zero
             )
 
-            second_pair = (
-                address_dict["commutator_nr"]
-                + "_"
-                + address_dict["interface_nr"]
-            )
+            if not cls.odd_flag:
+                second_pair = (
+                    address_dict["commutator_nr"]
+                    + "_"
+                    + address_dict["interface_nr"]
+                )
+            else:
+                second_pair = nr_com_right_zero + "_" + "zero"
 
             new_permutation.append((first_pair, second_pair))
             identity = key.format(
@@ -153,11 +157,14 @@ class In_Out_Route:
             address_dict = cls.field.set_addresses_in_commutator_route_algt(
                 is_zero_out_port, identity, port_right_one
             )
-            second_pair = (
-                address_dict["commutator_nr"]
-                + "_"
-                + address_dict["interface_nr"]
-            )
+            if not cls.odd_flag:
+                second_pair = (
+                    address_dict["commutator_nr"]
+                    + "_"
+                    + address_dict["interface_nr"]
+                )
+            else:
+                second_pair = nr_com_right_one + "_" + "one"
             new_permutation.append((first_pair, second_pair))
         return cls.insertion_sort_for_commutators(new_permutation)
 
@@ -189,9 +196,14 @@ class In_Out_Route:
     @classmethod
     def algorithm_report(cls, perms):
         report = {"success": 0, "failure": 0}
+        print("FINAL PERMS: ", perms)
         for perm in perms:
-            permutation_key = perm[0].split("_")
-            permutation_value = perm[1].split("_")
+            permutation_key = (
+                perm[0].split("_") if not cls.odd_flag else [perm[0]]
+            )
+            permutation_value = (
+                perm[1].split("_") if not cls.odd_flag else [perm[1]]
+            )
             if permutation_key[0] == permutation_value[0]:
                 report["success"] += 1
             else:
@@ -250,9 +262,7 @@ class In_Out_Route:
                                     referent_perm_value,
                                 )
                             else:
-                                referent_perm_value += (
-                                    1 - look_back_count
-                                )
+                                referent_perm_value += 1 - look_back_count
 
                             referent_perm_key = cls.look_for_permutation(
                                 cls.calculate(referent_perm_value, False),
@@ -306,9 +316,7 @@ class In_Out_Route:
                                     referent_perm_key,
                                 )
                             else:
-                                referent_perm_key += (
-                                    1 - look_back_count
-                                )
+                                referent_perm_key += 1 - look_back_count
                             referent_perm_value = cls.look_for_permutation(
                                 cls.calculate(referent_perm_key, False),
                                 perm_dict_label_all,
@@ -331,6 +339,12 @@ class In_Out_Route:
 
             if section_counter + 1 < cls.section_loop:
                 perm_dict_label_all.clear()
+                cls.odd_flag = (
+                    True
+                    if cls.consts.SECTIONS % 2 == 0
+                    and section_counter + 2 == cls.section_loop
+                    else False
+                )
                 perm_dict_label_all.extend(
                     cls.set_addresses_in_commutator(
                         perm_dict_label_0, perm_dict_label_1, section_counter
